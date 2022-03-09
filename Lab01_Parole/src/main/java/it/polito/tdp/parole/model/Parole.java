@@ -1,12 +1,13 @@
 package it.polito.tdp.parole.model;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
 public class Parole {
 
-	List<String> listaParole = new LinkedList<String>();
+	List<String> listaParole = new ArrayList<String>();
 
 	public Parole() {
 		// TODO
@@ -24,5 +25,13 @@ public class Parole {
 
 	public void reset() {
 		listaParole.clear();
+	}
+
+	public void cancellaParola(String s) {
+		for (String ss : getElenco()) {
+			if (ss.equals(s) == true) {
+				listaParole.remove(ss);
+			}
+		}
 	}
 }

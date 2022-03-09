@@ -3,6 +3,8 @@ package it.polito.tdp.parole;
 import it.polito.tdp.parole.model.Parole;
 
 import java.net.URL;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -33,17 +35,44 @@ public class FXMLController {
 	private Button btnReset;
 
 	@FXML
+	private Button btnCancella;
+
+	@FXML
+	private TextArea txtTempo;
+
+	long inizio;
+	long fine;
+
+	@FXML
 	void doInsert(ActionEvent event) {
+		inizio = System.nanoTime();
 		elenco.addParola(txtParola.getText());
 		txtParola.clear();
 		txtResult.setText(elenco.getElenco().toString());
+		fine = System.nanoTime();
+		txtTempo.setText("Tempo necessario per inserimento: " + (fine - inizio)/(1e9));
 	}
 
 	@FXML
 	void doReset(ActionEvent event) {
+		inizio = System.nanoTime();
 		elenco.reset();
 		txtParola.clear();
 		txtResult.clear();
+		fine = System.nanoTime();
+		txtTempo.setText("Tempo necessario per resettare: " + (fine - inizio)/(1e9));
+	}
+
+	@FXML
+	void doCancella(ActionEvent event) {
+		inizio = System.nanoTime();
+		elenco.cancellaParola(txtResult.getSelectedText());
+		txtResult.clear();
+		txtParola.clear();
+		if (elenco.getElenco().size() >= 1)
+			txtResult.setText(elenco.getElenco().toString());
+		fine = System.nanoTime();
+		txtTempo.setText("Tempo necessario per cancellare: " + (fine - inizio)/(1e9));
 	}
 
 	@FXML
